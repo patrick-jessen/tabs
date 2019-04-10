@@ -3,5 +3,13 @@
   "version": "1.0.0",
   "scripts": {
     "start": "parcel index.html"
+  },
+  "dependencies": {
+    "preact": "^8.4.2"
+  },
+  "devDependencies": {
+    "postcss-modules": "^1.4.1",
+    "sass": "^1.18.0",
+    "typescript": "^3.4.3"
   }
 }
