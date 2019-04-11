@@ -7,23 +7,13 @@ import image_yt from "~assets/yt.svg"
 import image_yt_off from "~assets/yt-off.svg"
 
 export default class VideoControl extends Component<
-    {onToggle:(boolean)=>void, playing:boolean},
+    {onShow:()=>void, playing:boolean},
     {enabled: boolean}
 > {
     constructor() {
         super()
-
-        this.onToggle = this.onToggle.bind(this)
-
-        this.state = {
-            enabled: false
-        }
     }
 
-    onToggle() {
-        this.setState({enabled: !this.state.enabled})
-        this.props.onToggle(this.state.enabled)
-    }
 
     render() : ComponentChild {
         var ytImg = image_yt_off
@@ -31,7 +21,7 @@ export default class VideoControl extends Component<
             ytImg = image_yt
 
         return (
-            <div class={style.play} onClick={this.onToggle}>
+            <div class={style.play} onClick={this.props.onShow}>
                 <img src={ytImg} />
             </div>
         )

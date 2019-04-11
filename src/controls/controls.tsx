@@ -15,7 +15,7 @@ export default class Controls extends Component<
     {
         onScrollChange:(number)=>void, onScrollToggle:(boolean)=>void,
         onTransposeChange:(number)=>void, 
-        onVideoToggle:(boolean)=>void, videoPlaying: boolean
+        onVideoShow:()=>void, videoPlaying: boolean
     }, any
 > {
     constructor() {
@@ -28,18 +28,19 @@ export default class Controls extends Component<
 
         return (
             <div class={style.controls}>
-                <ScrollControl
-                    onChange={this.props.onScrollChange}
-                    onToggle={this.props.onScrollToggle}
+                
+                <VideoControl 
+                    onShow={this.props.onVideoShow}
+                    playing={this.props.videoPlaying}
                 />
 
                 <TransposeControl 
                     onChange={this.props.onTransposeChange}
                 />
 
-                <VideoControl 
-                    onToggle={this.props.onVideoToggle}
-                    playing={this.props.videoPlaying}
+                <ScrollControl
+                    onChange={this.props.onScrollChange}
+                    onToggle={this.props.onScrollToggle}
                 />
             </div>
         )

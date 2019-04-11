@@ -14,7 +14,7 @@ class App extends Component<any, any> {
         this.onScrollChange = this.onScrollChange.bind(this)
         this.onScrollToggle = this.onScrollToggle.bind(this)
         this.onTransposeChange = this.onTransposeChange.bind(this)
-        this.onVideoToggle = this.onVideoToggle.bind(this)
+        this.onVideoShow = this.onVideoShow.bind(this)
         this.onVideoLostFocus = this.onVideoLostFocus.bind(this)
         this.onPlayToggle = this.onPlayToggle.bind(this)
         requestAnimationFrame(this.scroll)
@@ -83,6 +83,9 @@ Hope you're not lonely without me
     }
 
     scroll() {
+        if(this.state.scrollSpeed == 0)
+            this.scrollCounter = 0    
+
         this.scrollCounter += this.state.scrollSpeed
         document.documentElement.scrollTo(0, document.documentElement.scrollTop + this.scrollCounter)
         if(this.scrollCounter > 1) this.scrollCounter = 0
@@ -94,8 +97,8 @@ Hope you're not lonely without me
         this.setState({transpose: t})
     }
 
-    onVideoToggle(b) {
-        this.setState({blurSong: b, video: b})
+    onVideoShow() {
+        this.setState({blurSong: true, video: true})
     }
     onVideoLostFocus() {
         this.setState({video: false, blurSong: false})
@@ -119,7 +122,7 @@ Hope you're not lonely without me
                     onScrollChange={this.onScrollChange} 
                     onScrollToggle={this.onScrollToggle}
                     onTransposeChange={this.onTransposeChange}
-                    onVideoToggle={this.onVideoToggle}
+                    onVideoShow={this.onVideoShow}
                     videoPlaying={this.state.play}
                 />
                 <Video 

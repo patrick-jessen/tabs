@@ -26,11 +26,13 @@ export default class ScrollControl extends Component<
 
     onChange(e) {
         var touch = e.touches[0]
-        var p = touch.clientX / (window.innerWidth/2) * 100
+        var p = (window.innerHeight - touch.clientY - 50) * 1.3 / 150 * 100
         if(p > 100) p = 100
         if(p < 0) p = 0
         this.setState({speed: p, enabled: p != 0})
         this.props.onChange(p)
+
+        e.preventDefault()
     }
 
     onExpand() {
@@ -72,7 +74,7 @@ export default class ScrollControl extends Component<
         if(!this.state.speed)
             speed = 0
 
-        scrollStyle += ` width: ${speed}%`
+        scrollStyle += ` height: ${speed}%`
 
         return (
             <div class={scrollCls} 

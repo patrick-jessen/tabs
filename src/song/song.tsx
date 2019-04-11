@@ -111,16 +111,20 @@ export default class Song extends Component<
                 return <span>{c.value}</span>
         })
 
+        var fadeStyle = "opacity: 0;"
         var blurStyle = ""
-        if(this.props.blur)
-            blurStyle = 'filter: blur(2px) brightness(0.75);'
+        if(this.props.blur) {
+            fadeStyle = ""
+            blurStyle = "filter: blur(2px);"
+        }
 
         return (
             <div onTouchStart={this.props.onFocus}>
                 <pre class={style.song} style={blurStyle}>
                     {els}
+                    <div class={style.fade}></div>
                 </pre>
-                <div class={style.fade} style={blurStyle}></div>
+                <div class={style.overlay} style={fadeStyle} ></div>
             </div>
         )
     }

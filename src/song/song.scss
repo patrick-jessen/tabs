@@ -1,16 +1,15 @@
 .song {
-    white-space: pre-wrap;       /* Since CSS 2.1 */
-    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
-    white-space: -pre-wrap;      /* Opera 4-6 */
-    white-space: -o-pre-wrap;    /* Opera 7 */
-    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
     padding: 0 10px 50px 10px;
     background-color: white;
     margin: 0;
-    
-    @media (min-width: 1280px) { 
-        transition: 0.5s filter 0.05s;
-    }
+
+    transition-property: filter;
+    transition-delay: 0.12s;
 }
 
 .fade {
@@ -20,8 +19,17 @@
     right: 0;
     height: 100px;
     background: linear-gradient(#ffffff00, #ffffff);
+}
 
-    @media (min-width: 1280px) { 
-        transition: 0.5s filter 0.05s;
-    }
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0; 
+    right: 0;
+    bottom: 0;
+
+    opacity: 0.5;
+
+    background-color: black;
+    transition: 0.5s opacity 0.1s;
 }
