@@ -95,7 +95,7 @@ Hope you're not lonely without me
     }
 
     onVideoToggle(b) {
-        this.setState({blurSong: b, play: b, video: b})
+        this.setState({blurSong: b, video: b})
     }
     onVideoLostFocus() {
         this.setState({video: false, blurSong: false})

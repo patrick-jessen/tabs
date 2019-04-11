@@ -8,7 +8,9 @@
     background-color: white;
     margin: 0;
     
-    transition: 0.5s filter 0.05s;
+    @media (min-width: 1280px) { 
+        transition: 0.5s filter 0.05s;
+    }
 }
 
 .fade {
@@ -19,5 +21,7 @@
     height: 100px;
     background: linear-gradient(#ffffff00, #ffffff);
 
-    transition: 0.5s filter 0.05s;
+    @media (min-width: 1280px) { 
+        transition: 0.5s filter 0.05s;
+    }
 }

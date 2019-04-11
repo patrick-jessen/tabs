@@ -2,13 +2,16 @@
   "name": "tabs",
   "version": "1.0.0",
   "scripts": {
-    "start": "parcel index.html"
+    "start": "parcel index.html",
+    "build": "parcel build index.html",
+    "deploy": "firebase deploy"
   },
   "dependencies": {
     "plyr": "^3.5.2",
     "preact": "^8.4.2"
   },
   "devDependencies": {
+    "cssnano": "^4.1.10",
     "postcss-modules": "^1.4.1",
     "sass": "^1.18.0",
     "typescript": "^3.4.3"
