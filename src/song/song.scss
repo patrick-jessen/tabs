@@ -7,4 +7,17 @@
     padding: 0 10px 50px 10px;
     background-color: white;
     margin: 0;
+    
+    transition: 0.5s filter 0.05s;
+}
+
+.fade {
+    position: fixed;
+    bottom: 0;
+    left: 0; 
+    right: 0;
+    height: 100px;
+    background: linear-gradient(#ffffff00, #ffffff);
+
+    transition: 0.5s filter 0.05s;
 }

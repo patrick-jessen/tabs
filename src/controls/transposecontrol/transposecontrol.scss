@@ -1,0 +1,42 @@
+.transpose {
+    background-color: #dfdfdf;
+    display: inline-block;
+    border-radius: 5px;
+    height: 40px;
+    margin: 5px;
+    position: relative;
+    vertical-align: bottom;
+    font-family: monospace;
+
+    &.disabled {
+        opacity: 0.8;
+    }
+
+    &>.transVal {
+        display: inline-block;
+        vertical-align: top;
+        margin-top: 13px;
+    }
+
+    &>.transUp {
+        display: inline-block;
+        width: 40px;
+        height: 100%;
+        &>img {
+            margin-top: 13px;
+            margin-left: 13px;
+            height: 15px;
+            transform: rotate(180deg);
+        }
+    }
+    &>.transDown {
+        display: inline-block;
+        width: 40px;
+        height: 100%;
+        &>img {
+            margin-top: 13px;
+            margin-left: 13px;
+            height: 15px;
+        }
+    }
+}

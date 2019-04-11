@@ -85,53 +85,13 @@ class Parser {
     }    
 }
 
-export default class Song extends Component<any, {value:string}> {
+export default class Song extends Component<
+    {song:string, transpose:number, blur:boolean, onFocus:()=>void}, {}
+> {
     constructor() {
         super()
 
         this.onInput = this.onInput.bind(this)
-        this.state = {
-            value: `
-[Intro]
-Bm
-
-[Verse]
-D            A          D
-    Oh, it's a mystery to me
-            D          G              A
-We have a greed with which we have agreed
-        G                 A                  Bm
-And you think you have to want more than you need
-    G               A                 Bm
-Until you have it all, you won't be free
-
-[Chorus]
-        G                  D
-Society, you're a crazy breed
-                A              Bm
-Hope you're not lonely without me
-
-[Verse]
-            D                  A                   D
-When you want more than you have, you think you need
-                D                   G                     A
-And when you think more than you want, your thoughts begin to bleed
-    G               A             Bm
-I think I need to find a bigger place
-                G                  A                    Bm
-'Cause when you have more than you think, you need more space
-
-[Chorus]
-        G                  D
-Society, you're a crazy breed
-                A              Bm
-Hope you're not lonely without me
-        G           D
-Society, crazy indeed
-                A              Bm
-Hope you're not lonely without me   
-`
-        }
     }
 
     onInput() {
@@ -139,7 +99,7 @@ Hope you're not lonely without me
     }
 
     render() : ComponentChild {
-        var parser = new Parser(this.state.value);
+        var parser = new Parser(this.props.song);
         var chunks = []
         while(!parser.isEof)
             chunks.push(parser.parse())
@@ -151,10 +111,17 @@ Hope you're not lonely without me
                 return <span>{c.value}</span>
         })
 
+        var blurStyle = ""
+        if(this.props.blur)
+            blurStyle = 'filter: blur(2px) brightness(0.75);'
+
         return (
-            <pre class={style.song}>
-                {els}
-            </pre>
+            <div onTouchStart={this.props.onFocus}>
+                <pre class={style.song} style={blurStyle}>
+                    {els}
+                </pre>
+                <div class={style.fade} style={blurStyle}></div>
+            </div>
         )
     }
 
