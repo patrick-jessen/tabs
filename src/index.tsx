@@ -2,6 +2,10 @@ import {h, render, Component, ComponentChild} from "preact"
 import Song from "./song/song";
 import Controls from "./controls/controls";
 import Video from "./video/video";
+import { SignIn } from "./signin/signin";
+
+
+
 
 class App extends Component<any, any> {
     scrollCounter:number = 0
@@ -75,7 +79,7 @@ Hope you're not lonely without me
     }
 
     onScrollChange(v) {
-        this.setState({scrollSpeed: v * 0.005})
+        this.setState({scrollSpeed: v * 0.0025})
     }
 
     onScrollToggle(b) {
@@ -131,6 +135,9 @@ Hope you're not lonely without me
                     play={this.state.play} 
                     onPlayToggle={this.onPlayToggle}    
                 />
+
+
+                <SignIn />
             </div>
         )
     }

@@ -112,15 +112,13 @@ export default class Song extends Component<
         })
 
         var fadeStyle = "opacity: 0;"
-        var blurStyle = ""
         if(this.props.blur) {
             fadeStyle = ""
-            blurStyle = "filter: blur(2px);"
         }
 
         return (
             <div onTouchStart={this.props.onFocus}>
-                <pre class={style.song} style={blurStyle}>
+                <pre class={style.song}>
                     {els}
                     <div class={style.fade}></div>
                 </pre>

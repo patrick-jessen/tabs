@@ -3,6 +3,17 @@
     top: 50%;
     transform: translateY(-50%);
     border: none;
-    width: 100vw;
-    height: 56.25vw;
+    
+    @media screen and (orientation:portrait) {
+        width: 100vw;
+        height: 56.25vw;
+    }
+    @media screen and (orientation:landscape) {
+        width: 100vh;
+        height: 56.25vh;
+
+        left: 50%;
+        top: calc(50% - 30px);
+        transform: translate(-50%, -50%);
+    }
 }

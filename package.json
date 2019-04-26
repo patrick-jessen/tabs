@@ -2,18 +2,22 @@
   "name": "tabs",
   "version": "1.0.0",
   "scripts": {
-    "start": "parcel index.html",
-    "build": "parcel build index.html",
-    "deploy": "firebase deploy"
+    "start": "npm run clean && parcel index.html",
+    "build": "npm run clean && parcel build index.html",
+    "serve": "firebase serve",
+    "deploy": "firebase deploy",
+    "clean": "del /Q dist\\*"
   },
   "dependencies": {
-    "plyr": "^3.5.2",
+    "firebase": "^5.10.1",
+    "firebaseui": "^3.6.0",
+    "plyr": "^3.5.4",
     "preact": "^8.4.2"
   },
   "devDependencies": {
     "cssnano": "^4.1.10",
     "postcss-modules": "^1.4.1",
-    "sass": "^1.18.0",
-    "typescript": "^3.4.3"
+    "sass": "^1.19.0",
+    "typescript": "^3.4.5"
   }
 }

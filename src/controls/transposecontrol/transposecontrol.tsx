@@ -2,7 +2,9 @@ import {h, Component, ComponentChild} from "preact"
 // @ts-ignore
 import style from "./transposecontrol.scss"
 // @ts-ignore
-import img_down from "~assets/down.svg"
+import img_arrow from "~assets/arrow.svg"
+// @ts-ignore
+import img_arrow_off from "~assets/arrow-off.svg"
 
 export default class TransposeControl extends Component<
     {onChange:(number)=>void},
@@ -30,23 +32,22 @@ export default class TransposeControl extends Component<
     }
 
     render() : ComponentChild {
-        var transposeCls = style.transpose
-        if(this.state.transpose == 0)
-            transposeCls += " " + style.disabled
-            
+        var img_up = img_arrow
+        var img_dw = img_arrow
+        if(this.state.transpose <= 0) img_up = img_arrow_off
+        if(this.state.transpose >= 0) img_dw = img_arrow_off
+        
         return (
-            <div class={transposeCls}>
-                <div class={style.transDown} onClick={this.onDown}>
-                    <img src={img_down} />
-                </div>
-                { this.state.transpose != 0 &&
-                    <div class={style.transVal}>
-                        {this.state.transpose>0 ? "+":""}
-                        {this.state.transpose}
-                    </div>
-                }
+            <div class={style.transpose}>
                 <div class={style.transUp} onClick={this.onUp}>
-                    <img src={img_down} />
+                    <img src={img_up} />
+                </div>
+                <div class={style.transVal}>
+                    {this.state.transpose>0 ? "+":""}
+                    {this.state.transpose}
+                </div>
+                <div class={style.transDown} onClick={this.onDown}>
+                    <img src={img_dw} />
                 </div>
             </div>
         )

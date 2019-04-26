@@ -61,14 +61,12 @@ export default class ScrollControl extends Component<
         var scrollCls = style.scroll
         if(this.state.expanded)
             scrollCls += " " + style.expanded
-        else if(!this.state.enabled)
-            scrollCls += " " + style.disabled
 
         var scrollStyle = ""
         if(!this.state.expanded)
             scrollStyle = "opacity: 0.5;"
         if(!this.state.enabled)
-            scrollStyle = "opacity: 0;"
+            scrollStyle = "display: none;"
 
         var speed = this.state.speed
         if(!this.state.speed)
