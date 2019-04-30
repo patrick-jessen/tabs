@@ -1,10 +1,9 @@
-import {h, render, Component, ComponentChild} from "preact"
-import Song from "./song/song";
-import Controls from "./controls/controls";
-import Video from "./video/video";
+import {h, render, Component, ComponentChild} from "preact";
+import { SongView } from "./song/songview";
+import { Controls } from "./controls/controls";
+import { Video } from "./video/video";
 import { SignIn } from "./signin/signin";
-
-
+import { getSongs } from "../logic/Sync";
 
 
 class App extends Component<any, any> {
@@ -23,49 +22,9 @@ class App extends Component<any, any> {
         this.onPlayToggle = this.onPlayToggle.bind(this)
         requestAnimationFrame(this.scroll)
 
-        this.songObj = {
-            yt: "cl4cLEToPfc",
-            song: `
-[Intro]
-Bm
-
-[Verse]
-D            A          D
-    Oh, it's a mystery to me
-            D          G              A
-We have a greed with which we have agreed
-        G                 A                  Bm
-And you think you have to want more than you need
-    G               A                 Bm
-Until you have it all, you won't be free
-
-[Chorus]
-        G                  D
-Society, you're a crazy breed
-                A              Bm
-Hope you're not lonely without me
-
-[Verse]
-            D                  A                   D
-When you want more than you have, you think you need
-                D                   G                     A
-And when you think more than you want, your thoughts begin to bleed
-    G               A             Bm
-I think I need to find a bigger place
-                G                  A                    Bm
-'Cause when you have more than you think, you need more space
-
-[Chorus]
-        G                  D
-Society, you're a crazy breed
-                A              Bm
-Hope you're not lonely without me
-        G           D
-Society, crazy indeed
-                A              Bm
-Hope you're not lonely without me   
-`
-        }
+        var s = getSongs()[0]
+        s.parse();
+        this.songObj = s
 
         this.state = {
             scrollSpeed: 0,
@@ -116,9 +75,9 @@ Hope you're not lonely without me
     render() : ComponentChild {
         return (
             <div>
-                <Song 
+                <SongView 
                     onFocus = {this.onVideoLostFocus}
-                    song={this.songObj.song} 
+                    song={this.songObj} 
                     transpose={this.state.transpose} 
                     blur={this.state.blurSong} 
                 />
@@ -137,11 +96,14 @@ Hope you're not lonely without me
                 />
 
 
-                <SignIn />
+                {/* <SignIn /> */}
             </div>
         )
     }
 }
 
-const mountPoint = document.body;
-render(<App />, mountPoint, mountPoint.lastChild as Element)
+
+export function renderApp() {
+    const mountPoint = document.body;
+    render(<App />, mountPoint, mountPoint.lastChild as Element)
+}

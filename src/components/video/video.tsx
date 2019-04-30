@@ -4,7 +4,7 @@ import Plyr from "plyr"
 import style from "./video.scss"
 import "/node_modules/plyr/dist/plyr.css"
 
-export default class Video extends Component<
+export class Video extends Component<
     {videoId:string, visible:boolean, play:boolean, onPlayToggle:(boolean)=>void}, any
 > {
     player: any

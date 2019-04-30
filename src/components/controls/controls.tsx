@@ -7,11 +7,12 @@ import img_scroll from "~assets/scroll.svg"
 import img_scroll_off from "~assets/scroll-off.svg"
 //@ts-ignore
 import img_down from "~assets/down.svg"
+
 import ScrollControl from "./scrollcontrol/scrollcontrol";
 import TransposeControl from "./transposecontrol/transposecontrol";
 import VideoControl from "./videocontrol/videocontrol";
 
-export default class Controls extends Component<
+export class Controls extends Component<
     {
         onScrollChange:(number)=>void, onScrollToggle:(boolean)=>void,
         onTransposeChange:(number)=>void, 
