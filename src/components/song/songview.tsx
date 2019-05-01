@@ -112,7 +112,7 @@ function wrapLines(lines: SongLine[], maxwidth: number) {
 }
 
 export class SongView extends Component<
-    {song:Song, transpose:number, blur:boolean, onFocus:()=>void}, {}
+    {song:Song, transpose:number, blur:boolean, onFocus:()=>void, scroll:number}, {}
 > {
     constructor() {
         super()
@@ -125,17 +125,6 @@ export class SongView extends Component<
         }
 
         var actualLines = wrapLines(this.props.song.lines, window.innerWidth)
-
-
-        // var len = Math.min(Math.floor(viewWidth / charWidth), textWidth + value.length);
-        //                 var chunk = new Text(value.substring(0, len));
-
-        //                 start += len;
-        //                 value = value.substring(start);
-                        
-        //                 actualLines[lineIdx].text.push(chunk);
-        //                 if(len == value.length) break;
-
         var els = actualLines.map(l => 
             <div>
                 <div>{l.chords && l.chords.map(c => <ChunkView chunk={c} transpose={this.props.transpose} />)}</div>
@@ -145,12 +134,14 @@ export class SongView extends Component<
 
         return (
             <div onTouchStart={this.props.onFocus}>
-                <h1>{this.props.song.title}</h1>
-                <h2>{this.props.song.artist}</h2>
-                <pre class={style.song}>
-                    {els}
-                    <div class={style.fade}></div>
-                </pre>
+                <div style="transform:translateY();">
+                    <h1>{this.props.song.title}</h1>
+                    <h2>{this.props.song.artist}</h2>
+                    <pre class={style.song}>
+                        {els}
+                    </pre>
+                </div>
+                <div class={style.fade}></div>
                 <div class={style.overlay} style={fadeStyle} ></div>
             </div>
         )

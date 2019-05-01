@@ -30,6 +30,7 @@ class App extends Component<any, any> {
             scrollSpeed: 0,
             blurSong: false,
             transpose: 0,
+            scroll: 0,
 
             
             play: false,
@@ -50,7 +51,7 @@ class App extends Component<any, any> {
             this.scrollCounter = 0    
 
         this.scrollCounter += this.state.scrollSpeed
-        document.documentElement.scrollTo(0, document.documentElement.scrollTop + this.scrollCounter)
+        document.documentElement.scrollBy(0, this.scrollCounter)
         if(this.scrollCounter > 1) this.scrollCounter = 0
 
         requestAnimationFrame(this.scroll)
