@@ -124,8 +124,8 @@ export class Parser {
 }
 
 export class SongLine {
-    chords: Chunk[]
-    text: Chunk[]
+    chords: Chunk[] = []
+    text: Chunk[] = []
 }
 
 export class Chunk { 

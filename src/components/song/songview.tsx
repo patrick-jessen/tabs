@@ -5,6 +5,112 @@ import style from "./songview.scss"
 import { Song } from "../../logic/Song";
 import { Chunk, Chord, Text, SongLine } from "../../logic/parse";
 
+function wrapLines(lines: SongLine[], maxwidth: number) {
+    var actualLines: SongLine[] = [];
+    const charWidth = Math.floor(maxwidth / 8);
+
+    lines.forEach(l => {
+        var baseLine = actualLines.length;
+        var breakpoints: number[] = [];
+
+        var currWidth = 0;
+        var currLine = 0;
+
+        l.text.forEach(c => {
+            var width = c.value.length
+
+            // Is there room for this chunk
+            if(currWidth + width <= charWidth) {
+                breakpoints.push(charWidth);
+                
+                // Just add it
+                while(actualLines.length <= baseLine)
+                    actualLines.push(new SongLine());
+
+                actualLines[baseLine + currLine].text.push(c);
+                currWidth += c.value.length
+            }
+            else {
+                var w1 = charWidth - currWidth; // The part that there is room for
+                // Split at a space
+                for(; w1 > 0; w1--) {
+                    if(c.value[w1-1] == ' ') break;
+                }
+                breakpoints.push(currWidth + w1);
+                breakpoints.push(charWidth);
+
+                const t1 = new Text(c.value.substring(0, w1));
+                const t2 = new Text(c.value.substring(w1, width));
+
+                // Add the part that there is room for
+                while(actualLines.length <= baseLine + currLine)
+                    actualLines.push(new SongLine());
+
+                actualLines[baseLine + currLine].text.push(t1);
+                
+                currLine++
+                currWidth = w1;
+
+                // Add the part that there wasnt room for
+                while(actualLines.length <= baseLine + currLine)
+                    actualLines.push(new SongLine());
+
+                actualLines[baseLine + currLine].text.push(t2);
+            }
+        })
+
+        currWidth = 0;
+        currLine = 0;
+
+        l.chords.forEach(c => {
+            var width = c.value.length
+            var breakpt = breakpoints[currLine];
+
+            // Is there room for this chunk
+            if(currWidth + width <= breakpt) {
+                // Just add it
+                while(actualLines.length <= baseLine)
+                    actualLines.push(new SongLine());
+
+                actualLines[baseLine + currLine].chords.push(c);
+                currWidth += width
+            }
+            else if(c instanceof Chord) {
+                currLine++;
+                currWidth = width;
+
+                while(actualLines.length <= baseLine + currLine)
+                    actualLines.push(new SongLine());
+
+                actualLines[baseLine + currLine].chords.push(c);
+            }
+            else {
+                var w1 = breakpt - currWidth; // The part that there is room for
+
+                const t1 = new Text(c.value.substring(0, w1));
+                const t2 = new Text(c.value.substring(w1, width));
+
+                // Add the part that there is room for
+                while(actualLines.length <= baseLine + currLine)
+                    actualLines.push(new SongLine());
+
+                actualLines[baseLine + currLine].chords.push(t1);
+                
+                currLine++
+                currWidth = w1;
+
+                // Add the part that there wasnt room for
+                while(actualLines.length <= baseLine + currLine)
+                    actualLines.push(new SongLine());
+
+                actualLines[baseLine + currLine].chords.push(t2);
+            }
+        })
+    })
+
+    return actualLines;
+}
+
 export class SongView extends Component<
     {song:Song, transpose:number, blur:boolean, onFocus:()=>void}, {}
 > {
@@ -18,80 +124,17 @@ export class SongView extends Component<
             fadeStyle = ""
         }
 
-        var actualLines : SongLine[] = [];
-        const viewWidth = window.innerWidth;
-        const charWidth = 8;
-        for(var l = 0; l < this.props.song.lines.length; l++) {
-            var line = this.props.song.lines[l];
-            var currLine = actualLines.length;
+        var actualLines = wrapLines(this.props.song.lines, window.innerWidth)
 
-            var chordsWidth = 0;
-            var textWidth = 0;
-            
-            if(line.chords != null)
-                line.chords.forEach(c => {
-                    var value = c.value;
-                    var start = 0;
 
-                    while(true) {
-                        var lineIdx = currLine + Math.floor((chordsWidth + c.value.length) / viewWidth);
+        // var len = Math.min(Math.floor(viewWidth / charWidth), textWidth + value.length);
+        //                 var chunk = new Text(value.substring(0, len));
+
+        //                 start += len;
+        //                 value = value.substring(start);
                         
-                        while(lineIdx >= actualLines.length)
-                            actualLines.push(new SongLine());
-
-                        if(actualLines[lineIdx].chords == null)
-                            actualLines[lineIdx].chords = []
-
-                        if(c instanceof Chord) {
-                            actualLines[lineIdx].chords.push(c);
-                            break;
-                        }
-                        
-                        var len = Math.min(Math.floor(viewWidth / charWidth), chordsWidth + value.length);
-                        if(len < chordsWidth + value.length)
-                        {
-                            currLine++;
-                            chordsWidth = 0;
-                        }
-                        var chunk = new Text(value.substring(0, len));
-
-                        start += len;
-                        value = value.substring(start);
-                        
-                        actualLines[lineIdx].chords.push(chunk);
-                        if(value.length == 0) break;
-                    }
-                    chordsWidth += c.value.length * charWidth;
-                });
-            if(line.text != null)
-                line.text.forEach(c => {
-                    var value = c.value;
-                    var start = 0;
-
-                    while(true) {
-                        var lineIdx = currLine + Math.floor((textWidth + value.length) / viewWidth);
-                        currLine++;
-
-                        while(lineIdx >= actualLines.length)
-                            actualLines.push(new SongLine());
-
-                        if(actualLines[lineIdx].text == null)
-                            actualLines[lineIdx].text = []
-
-                        var len = Math.min(Math.floor(viewWidth / charWidth), textWidth + value.length);
-                        var chunk = new Text(value.substring(0, len));
-
-                        start += len;
-                        value = value.substring(start);
-                        
-                        actualLines[lineIdx].text.push(chunk);
-                        if(len == value.length) break;
-                    }
-                    textWidth += c.value.length;
-                });
-        }
-
-        console.log(actualLines)
+        //                 actualLines[lineIdx].text.push(chunk);
+        //                 if(len == value.length) break;
 
         var els = actualLines.map(l => 
             <div>
